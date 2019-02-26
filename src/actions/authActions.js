@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "utils/setAuthToken";
-import { SET_CURRENT_USER } from "./types";
+import { SET_CURRENT_USER , LOGOUT_USER} from "./types";
 
 export function login(data) {
   return dispatch => {
@@ -25,6 +25,12 @@ export function logout() {
   return dispatch => {
     localStorage.removeItem("jwtToken");
     setAuthToken(false);
-    dispatch(setCurrentUser(""));
+    dispatch(logoutUser());
   };
+}
+
+export function logoutUser() {
+  return {
+    type: LOGOUT_USER
+  }
 }
