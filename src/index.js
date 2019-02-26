@@ -14,6 +14,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import setAuthToken from "utils/setAuthToken";
 import { setCurrentUser } from "actions/authActions";
 
+import requireAuth from 'utils/requireAuth';
+
 const store = createStore(
   reducers,
   compose(
@@ -32,7 +34,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route path="/login" component={LoginPage} />
+        <Route path="/login" component={requireAuth(LoginPage)} />
       </Switch>
     </BrowserRouter>
   </Provider>,
