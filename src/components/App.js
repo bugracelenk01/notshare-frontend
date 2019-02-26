@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "actions/authActions";
 
-export class App extends Component {
+class App extends Component {
   render() {
     const data = { email: "bugracelenk@gmail.com", password: "1234qwerasdf" };
     return (

@@ -1,11 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logout } from "actions/authActions";
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   render() {
     return (
       <div>
-        Hello Login Page
+        <button onClick = { () => this.props.logout()}>Logout</button>
       </div>
-    )
+    );
   }
 }
+
+export default connect(
+  null,
+  { logout }
+)(LoginPage);

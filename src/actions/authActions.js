@@ -20,3 +20,11 @@ export function setCurrentUser(token) {
     token
   };
 }
+
+export function logout() {
+  return dispatch => {
+    localStorage.removeItem("jwtToken");
+    setAuthToken(false);
+    dispatch(setCurrentUser(""));
+  };
+}
