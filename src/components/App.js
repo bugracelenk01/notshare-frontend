@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "actions/authActions";
+import { Button } from "reactstrap";
 
 class App extends Component {
   render() {
     const data = { email: "bugracelenk@gmail.com", password: "1234qwerasdf" };
     return (
       <div>
-        <button onClick = {() => this.props.login(data)}>Login</button>
+        <Button color="primary" onClick={() => this.props.login(data)}>Login</Button>
       </div>
     );
   }
