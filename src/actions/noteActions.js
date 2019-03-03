@@ -3,7 +3,7 @@ import axios from "axios";
 
 export function getNotes() {
   return dispatch => {
-    return axios.get("http://localhost:3003/api/notes/get-notes").then(res => {
+    return axios.get("https://noteshare-backend.herokuapp.com/api/notes/get-notes").then(res => {
       return dispatch({
         type: GET_NOTES,
         payload: res.data
@@ -15,7 +15,7 @@ export function getNotes() {
 export function getNoteById(id) {
   return dispatch => {
     return axios
-      .get(`http://localhost:3003/api/notes/get-note/${id}`)
+      .get(`https://noteshare-backend.herokuapp.com/api/notes/get-note/${id}`)
       .then(res => {
         const note = res.data;
         return dispatch({
@@ -30,7 +30,7 @@ export function getNoteById(id) {
 export function publishNote(data) {
   return dispatch => {
     axios
-      .post("http://localhost:3003/api/notes/publish-note", data)
+      .post("https://noteshare-backend.herokuapp.com/api/notes/publish-note", data)
       .then(res => {
         console.log(res);
       });
@@ -39,7 +39,7 @@ export function publishNote(data) {
 
 export function deleteNote(id) {
   return dispatch => {
-    return axios.delete(`http://localhost:3003/api/notes/delete-note/${id}`).then(res => {
+    return axios.delete(`https://noteshare-backend.herokuapp.com/api/notes/delete-note/${id}`).then(res => {
       console.log(res)
     })
   }

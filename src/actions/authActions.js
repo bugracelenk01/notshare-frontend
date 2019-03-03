@@ -5,7 +5,7 @@ import { SET_CURRENT_USER , LOGOUT_USER} from "./types";
 export function login(data) {
   return dispatch => {
     return axios
-      .post("http://localhost:3003/api/users/login", data)
+      .post("https://noteshare-backend.herokuapp.com/api/users/login", data)
       .then(res => {
         const token = res.data.token;
         localStorage.setItem("jwtToken", token);
