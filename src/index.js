@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "reducers";
-
+import "semantic-ui-css/semantic.min.css";
 import App from "components/App";
 import LoginPage from "components/LoginPage";
 import LandingPage from "views/LandingPage/LandingPage";
@@ -32,29 +32,13 @@ if (localStorage.jwtToken) {
   store.dispatch(setCurrentUser(localStorage.jwtToken));
 }
 
-const dashboardRoutes = [];
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <div>
-        <Header
-          color="transparent"
-          routes={dashboardRoutes}
-          brand="NoteShare"
-          rightLinks={<HeaderLinks />}
-          fixed
-          changeColorOnScroll={{
-            height: 400,
-            color: "white"
-          }}
-          //{...rest}
-        />
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/login" component={requireAuth(LoginPage)} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Route path="/login" component={requireAuth(LoginPage)} />
+      </Switch>
     </BrowserRouter>
   </Provider>,
   document.querySelector("#root")
