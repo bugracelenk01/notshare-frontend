@@ -7,12 +7,10 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "reducers";
 import "semantic-ui-css/semantic.min.css";
-import App from "components/App";
-import LoginPage from "components/LoginPage";
 import LandingPage from "views/LandingPage/LandingPage";
+import LoginPage from "views/LoginPage/LoginPage";
+import ProfilePage from "views/ProfilePage/ProfilePage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Header from "components/Header";
-import HeaderLinks from "components/HeaderLinks";
 
 import setAuthToken from "utils/setAuthToken";
 import { setCurrentUser } from "actions/authActions";
@@ -37,7 +35,8 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route path="/login" component={requireAuth(LoginPage)} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/profile" component={requireAuth(ProfilePage)} />
       </Switch>
     </BrowserRouter>
   </Provider>,
