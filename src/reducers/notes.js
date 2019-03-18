@@ -10,7 +10,10 @@ export default (state = initialState, action) => {
     case GET_NOTE:
       return { ...state, note: action.payload };
     case GET_NOTES:
-      return { ...state, notes: action.payload };
+      action.payload.map(note => {
+        state.notes=[...state.notes, { title:note.name, description: note.courseName, price: note.id}]
+      })
+      return state;
     default:
       return state;
   }

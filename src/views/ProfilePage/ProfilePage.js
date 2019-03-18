@@ -11,9 +11,13 @@ import {
   Card,
   Dropdown,
   Menu,
-  Tab
+  Tab,
+  Placeholder
 } from "semantic-ui-react";
+import { getNotes } from "actions/noteActions";
+import { connect } from "react-redux";
 import { stateOptions } from "../../common";
+import SearchInput from "../../components/searchInput";
 const items = [
   {
     header: "Project Report - April",
@@ -70,93 +74,97 @@ const items = [
     meta: "ROI: 27%"
   }
 ];
-const panes = [
-  {
-    menuItem: "Notes",
-    render: () => (
-      <Tab.Pane attached={false}>
-        <Menu>
-          <Menu.Item>Search by Course Name</Menu.Item>
-          <Dropdown
-            placeholder="Course Names"
-            fluid
-            multiple
-            search
-            selection
-            options={stateOptions}
-          />
-        </Menu>
-        <Card.Group items={items} itemsPerRow="1" />
-      </Tab.Pane>
-    )
-  },
-  {
-    menuItem: "Comments",
-    render: () => (
-      <Tab.Pane attached={false}>
-        <Comment.Group>
-          <Header as="h3" dividing>
-            Comments
-          </Header>
-
-          <Comment>
-            <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
-            <Comment.Content>
-              <Comment.Author as="a">Matt</Comment.Author>
-              <Comment.Metadata>
-                <div>Today at 5:42PM</div>
-              </Comment.Metadata>
-              <Comment.Text>How artistic!</Comment.Text>
-              
-            </Comment.Content>
-          </Comment>
-
-          <Comment>
-            <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
-            <Comment.Content>
-              <Comment.Author as="a">Elliot Fu</Comment.Author>
-              <Comment.Metadata>
-                <div>Yesterday at 12:30AM</div>
-              </Comment.Metadata>
-              <Comment.Text>
-                <p>
-                  This has been very useful for my research. Thanks as well!
-                </p>
-              </Comment.Text>
-              
-            </Comment.Content>
-            
-          </Comment>
-
-          <Comment>
-            <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/joe.jpg" />
-            <Comment.Content>
-              <Comment.Author as="a">Joe Henderson</Comment.Author>
-              <Comment.Metadata>
-                <div>5 days ago</div>
-              </Comment.Metadata>
-              <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-              
-            </Comment.Content>
-          </Comment>
-
-          <Form reply>
-            <Form.TextArea />
-            <Button
-              content="Add Reply"
-              labelPosition="left"
-              icon="edit"
-              primary
-            />
-          </Form>
-        </Comment.Group>
-      </Tab.Pane>
-    )
-  }
-];
 
 class ProfilePage extends Component {
+  componentWillMount() {
+    this.props.getNotes();
+  }
   render() {
+    const panes = [
+      {
+        menuItem: "Notes",
+        render: () => (
+          <Tab.Pane attached={false}>
+            <Grid centered>
+              <Grid.Column width={2}>
+                <Header style={{ marginLeft: 6, marginTop: 10 }}>Search</Header>
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <SearchInput />
+              </Grid.Column>
+            </Grid>
+            <Card.Group items={this.props.notes} itemsPerRow="1" />
+          </Tab.Pane>
+        )
+      },
+      {
+        menuItem: "Comments",
+        render: () => (
+          <Tab.Pane attached={false}>
+            <Grid>
+              <Grid.Column width={16}>
+                <Comment.Group>
+                  <Header as="h3" dividing>
+                    Comments
+                  </Header>
+
+                  <Comment>
+                    <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
+                    <Comment.Content>
+                      <Comment.Author as="a">Matt</Comment.Author>
+                      <Comment.Metadata>
+                        <div>Today at 5:42PM</div>
+                      </Comment.Metadata>
+                      <Comment.Text>How artistic!</Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+
+                  <Comment>
+                    <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+                    <Comment.Content>
+                      <Comment.Author as="a">Elliot Fu</Comment.Author>
+                      <Comment.Metadata>
+                        <div>Yesterday at 12:30AM</div>
+                      </Comment.Metadata>
+                      <Comment.Text>
+                        <p>
+                          This has been very useful for my research. Thanks as
+                          well!
+                        </p>
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+
+                  <Comment>
+                    <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/joe.jpg" />
+                    <Comment.Content>
+                      <Comment.Author as="a">Joe Henderson</Comment.Author>
+                      <Comment.Metadata>
+                        <div>5 days ago</div>
+                      </Comment.Metadata>
+                      <Comment.Text>
+                        Dude, this is awesome. Thanks so much
+                      </Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+
+                  <Form reply>
+                    <Form.TextArea />
+                    <Button
+                      content="Add Reply"
+                      labelPosition="left"
+                      icon="edit"
+                      primary
+                    />
+                  </Form>
+                </Comment.Group>
+              </Grid.Column>
+            </Grid>
+          </Tab.Pane>
+        )
+      }
+    ];
+
     return (
       <Container>
         <Grid centered columns={14}>
@@ -206,13 +214,24 @@ class ProfilePage extends Component {
               <Grid.Column width={1} />
             </Grid>
           </Grid.Column>
-          <Grid.Column width={10}>
-            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+          <Grid.Column width={12}>
+            <Grid>
+              <Grid.Column width={16}>
+                <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+              </Grid.Column>
+            </Grid>
           </Grid.Column>
         </Grid>
       </Container>
     );
   }
 }
-
-export default ProfilePage;
+const mapStateToProps = state => {
+  return {
+    notes: state.notes.notes
+  };
+};
+export default connect(
+  mapStateToProps,
+  { getNotes }
+)(ProfilePage);
